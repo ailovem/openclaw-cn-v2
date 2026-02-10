@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能日程管理 - OpenClaw 场景实验室</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #00f0ff;
+            --green: #00ff88;
+            --gold: #ffd700;
+            --dark: #0a0a0f;
+            --light: #ffffff;
+        }
+        body {
+            font-family: 'SF Pro Display', -apple-system, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        .bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(102, 126, 234, 0.15) 0%, transparent 50%);
+        }
+        nav {
+            position: fixed; top: 0; width: 100%;
+            padding: 15px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+        .logo { font-size: 20px; font-weight: bold; color: var(--green); cursor: pointer; }
+        .back-btn {
+            padding: 8px 20px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 50px; color: var(--green);
+            cursor: pointer; text-decoration: none; font-size: 14px;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: rgba(0, 255, 136, 0.2); box-shadow: 0 0 20px rgba(0, 255, 136, 0.3); }
+        .hero {
+            min-height: 50vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+        }
+        .hero-badge {
+            padding: 8px 20px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 50px;
+            font-size: 14px; color: var(--green);
+            margin-bottom: 25px;
+        }
+        .hero h1 { font-size: 48px; margin-bottom: 15px; }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 18px; opacity: 0.8; max-width: 600px; }
+        
+        .content { padding: 50px; max-width: 1200px; margin: 0 auto; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 50px; }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px; padding: 30px;
+            transition: 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 136, 0.3);
+            background: rgba(0, 255, 136, 0.05);
+        }
+        .feature-icon { font-size: 36px; margin-bottom: 15px; }
+        .feature-card h3 { margin-bottom: 10px; }
+        .feature-card p { opacity: 0.7; font-size: 14px; line-height: 1.6; }
+        
+        .demo-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 20px; padding: 40px; margin-bottom: 50px;
+        }
+        .demo-section h2 { margin-bottom: 20px; color: var(--green); }
+        .chat-demo {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px; padding: 20px;
+            font-family: monospace;
+        }
+        .chat-line { margin-bottom: 10px; padding: 10px; border-radius: 8px; }
+        .chat-user { background: rgba(0, 240, 255, 0.1); margin-left: 20px; }
+        .chat-ai { background: rgba(0, 255, 136, 0.1); margin-right: 20px; }
+        
+        footer {
+            padding: 50px; text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; }
+        .footer-links a { color: var(--light); text-decoration: none; opacity: 0.6; transition: 0.3s; }
+        .footer-links a:hover { opacity: 1; color: var(--green); }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    
+    <nav>
+        <div class="logo" onclick="window.location.href='index-spa.html'">← OpenClaw</div>
+        <a href="index-spa.html" class="back-btn">返回首页</a>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-badge">📅 智能日程管理</div>
+        <h1>AI 驱动的 <span>智能日程</span></h1>
+        <p>自动规划、智能提醒、跨时区管理，让时间成为你的盟友</p>
+    </section>
+    
+    <div class="content">
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>智能规划</h3>
+                <p>AI 分析你的习惯，自动优化日程安排，平衡工作与生活</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>智能提醒</h3>
+                <p>基于任务重要性自动调整提醒时间，不错过任何重要会议</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>跨时区管理</h3>
+                <p>自动转换时区，与全球团队协作更轻松</p>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>💬 使用示例</h2>
+            <div class="chat-demo">
+                <div class="chat-line chat-user">帮我安排下周一的工作</div>
+                <div class="chat-line chat-ai">好的！根据你的习惯，我建议：
+                
+9:00-9:30 - 回复重要邮件
+10:00-11:30 - 项目会议
+14:00-16:00 - 核心开发工作
+16:30-17:00 - 与纽约团队同步
+
+需要调整吗？</div>
+                <div class="chat-line chat-user">把下午的会议改到周三</div>
+                <div class="chat-line chat-ai">已调整！周三 14:00-15:30 已添加会议提醒。
+
+同时为你保留了周五下午的专注开发时间 🛡️</div>
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="index-spa.html" class="back-btn" style="padding: 14px 35px; font-size: 15px;">🚀 立即体验</a>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="index-spa.html">首页</a>
+            <a href="index-spa.html#scenes">场景实验室</a>
+            <a href="https://docs.openclaw.ai">文档中心</a>
+        </div>
+        <div style="opacity: 0.4; font-size: 13px;">© 2026 OpenClaw 中国社区</div>
+    </footer>
+</body>
+</html>
